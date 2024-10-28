@@ -1,0 +1,433 @@
+﻿@inject IMediator _mediator
+@inject IEmployeeRepository _employeeRepository
+@{
+    string email = ViewBag.Email;
+    Layout = null;  // No layout will be used
+    var department = (await _mediator.Send(new GetAllDepartmentQuery())).Take(6);
+    var employees = await _employeeRepository.GetAllAsync();
+    var employee = employees.Take(3);
+    var total = employees.Sum(E => E.Salary);
+    decimal Max = (decimal)0;
+    decimal Min = (decimal)0;
+    if (employees.Count()>0)
+    {
+         Max = employees.Max(E => E.Salary);
+         Min = employees.Min(E => E.Salary);
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- [Head] start -->
+<head>
+    <title>CRUD</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Berry is trending dashboard template made using Bootstrap 5 design framework. Berry is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies.">
+    <meta name="keywords" content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard">
+    <meta name="author" content="codedthemes">
+
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="~/dashboard/assets/images/crud.svg" type="image/x-icon"> <!-- [Google Font] Family -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" id="main-font-link">
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/tabler-icons.min.css">
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/feather.css">
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/fontawesome.css">
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/material.css">
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="~/dashboard/assets/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="~/dashboard/assets/css/style-preset.css">
+
+</head>
+<!-- [Head] end -->
+<!-- [Body] Start -->
+<body>
+    <!-- [ Pre-loader ] start -->
+    <div class="loader-bg">
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+    <!-- [ Pre-loader ] End -->
+    <!-- [ Sidebar Menu ] start -->
+    <nav class="pc-sidebar">
+        <div class="navbar-wrapper">
+            <div class="m-header">
+                <a href="" class="b-brand text-primary">
+                    <!-- ========   Change your logo from here   ============ -->
+                    <img src="~/dashboard/assets/images/crud.jpg" height="50" width="100">
+                </a>
+            </div>
+            <div class="navbar-content">
+                <ul class="pc-navbar">
+                    <li class="pc-item pc-caption">
+                        <label>Dashboard</label>
+                        <i class="ti ti-dashboard"></i>
+                    </li>
+                    <li class="pc-item">
+                        <a asp-controller="Home" asp-action="Index" class="pc-link">
+                            <span class="pc-micon">
+                                <i class="ti ti-dashboard">
+                                </i>
+                            </span><span class="pc-mtext">Default</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a asp-controller="Department" asp-action="Index" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-clipboard-list"></i></span>
+                            <span class="pc-mtext">Departments</span>
+                        </a>
+                    </li>
+                    <li class="pc-item">
+                        <a asp-controller="Employee" asp-action="Index" class="pc-link">
+                            <span class="pc-micon"><i class="ti ti-man"></i></span>
+                            <span class="pc-mtext">Employees</span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="pc-item">
+                            <a asp-controller="User" asp-action="Index" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-user"></i></span>
+                                <span class="pc-mtext">Users</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a asp-controller="Role" asp-action="Index" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-file-check"></i></span>
+                                <span class="pc-mtext">Roles</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- [ Sidebar Menu ] end --> <!-- [ Header Topbar ] start -->
+    <header class="pc-header">
+        <div class="header-wrapper">
+            <!-- [Mobile Media Block] start -->
+            <div class="me-auto pc-mob-drp">
+                <ul class="list-unstyled">
+                    <li class="pc-h-item header-mobile-collapse">
+                        <a href="#" class="pc-head-link head-link-secondary ms-0" id="sidebar-hide">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+                    <li class="pc-h-item pc-sidebar-popup">
+                        <a href="#" class="pc-head-link head-link-secondary ms-0" id="mobile-collapse">
+                            <i class="ti ti-menu-2"></i>
+                        </a>
+                    </li>
+             
+                </ul>
+            </div>
+            <!-- [Mobile Media Block end] -->
+            <div class="ms-auto">
+                <ul class="list-unstyled">  
+                    <li class="dropdown pc-h-item header-user-profile">
+                        <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
+                           role="button" aria-haspopup="false" aria-expanded="false">
+            
+                            <span>
+                                <i class="ti ti-settings"></i>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+                            <div class="dropdown-header">
+                                <h4>Hi, <span class="small text-muted">@User.Identity.Name</span></h4>
+                                <hr>
+                                <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 280px)">
+                                    <a asp-action="SignOut" asp-controller="Account" class="dropdown-item">
+                                        <i class="ti ti-logout"></i>
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!-- [ Header ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+        <div class="pc-content">
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ sample-page ] start -->
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-secondary-dark dashnum-card text-white overflow-hidden">
+                        <span class="round small"></span>
+                        <span class="round big"></span>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="avtar avtar-lg">
+                                        <i class="text-white ti ti-wallet"></i>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="btn-group">
+                                        
+                  
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-white d-block f-34 f-w-500 my-2">$@total <i class="ti ti-arrow-up-right-circle opacity-50"></i></span>
+                            <p class="mb-0 opacity-50">Total Salary For Employees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card bg-primary-dark dashnum-card text-white overflow-hidden">
+                        <span class="round small"></span>
+                        <span class="round big"></span>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="avtar avtar-lg">
+                                        <i class="text-white ti ti-credit-card"></i>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <ul class="nav nav-pills justify-content-end mb-0" id="chart-tab-tab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link text-white active"
+                                                    id="chart-tab-home-tab"
+                                                    data-bs-toggle="pill"
+                                                    data-bs-target="#chart-tab-home"
+                                                    role="tab"
+                                                    aria-controls="chart-tab-home"
+                                                    aria-selected="true">
+                                                Min Salary
+                                            </button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link text-white"
+                                                    id="chart-tab-profile-tab"
+                                                    data-bs-toggle="pill"
+                                                    data-bs-target="#chart-tab-profile"
+                                                    role="tab"
+                                                    aria-controls="chart-tab-profile"
+                                                    aria-selected="false">
+                                                Max Salary
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="chart-tab-tabContent">
+                                <div class="tab-pane show active" id="chart-tab-home" role="tabpanel" aria-labelledby="chart-tab-home-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span class="text-white d-block f-34 f-w-500 my-2">$@Min <i class="ti ti-arrow-down-right-circle opacity-50"></i></span>
+                                            <p class="mb-0 opacity-50">Min Salary For Employees</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <div id="tab-chart-1"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="chart-tab-profile" role="tabpanel" aria-labelledby="chart-tab-profile-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <span class="text-white d-block f-34 f-w-500 my-2">$@Max <i class="ti ti-arrow-up-right-circle opacity-50"></i></span>
+                                            <p class="mb-0 opacity-50">Max Salary For Employees</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <div id="tab-chart-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12">
+                    <div class="card bg-primary-dark dashnum-card dashnum-card-small text-white overflow-hidden">
+                        <span class="round bg-primary small"></span>
+                        <span class="round bg-primary big"></span>
+                        <div class="card-body p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="avtar avtar-lg">
+                                    <i class="ti ti-presentation-analytics"></i>
+                                </div>
+                                <div class="ms-2">
+                                    <h4 class="text-white mb-1">CRUD Project</h4>
+                                    <p class="mb-0 opacity-50 text-sm">By : Islam Kliyeb</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card dashnum-card dashnum-card-small overflow-hidden">
+                        <span class="round bg-warning small"></span>
+                        <span class="round bg-warning big"></span>
+                        <div class="card-body p-3">
+                            <div class="d-flex align-items-center">
+                                <div class="avtar avtar-lg bg-light-warning">
+                                    <i class="ti ti-calendar-time"></i>
+                                </div>
+                                <div class="ms-2">
+                                    <h4 class="mb-1">@DateTime.Now</i></h4>
+                                    <p class="mb-0 opacity-50 text-sm">Date and Time</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-8 col-md-12">
+                    <!--table-->
+                    <section class="py-8">
+                        <div class="container">
+                            <div class="bg-white rounded shadow overflow-hidden">
+                                <div class="pt-3 pb-3 text-center">
+                                <h4 class="text-left">Some Employees</h4>
+                                </div>
+                                <div class="px-4 table-responsive">
+                                    <table class="table mb-0 table-borderless table-striped small">
+                                        <thead>
+                                            <tr class="text-secondary"><th class="py-3 px-70">Name</th><th class="py-3 px-6">Department</th><th class="py-3 px-6">E-mail</th><th class="py-3 px-6">Address</th><th class="py-3 px-6">Status</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(var item in employee)
+                                            {
+                                                <tr>
+                                                    <td class="py-5 px-6">@item.Name</td>
+                                                    <td class="py-5 px-6">@item.Department.Name</td>
+                                                    <td class="py-5 px-6">@item.Email</td>
+                                                    <td class="py-5 px-6">@item.Address</td>
+                                                    <td class="py-5 px-6">
+                                                        @if (item.IsActve)
+                                                        {
+                                                            <span class="badge bg-success">Active</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-danger">InActive</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                            
+                                        </tbody>
+                                    </table>
+                                    <div class="pt-3 pb-5 text-center">
+                                        <a class="btn d-inline-flex align-items-center mx-auto text-decoration-none text-primary" style="max-width: max-content;" asp-controller="Employee" asp-action="Index">
+                                            <span class="d-inline-block me-2">
+                                                <svg viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 12px;height: 12px">
+                                                    <path d="M8.66667 12.3333H3.33333C2.8029 12.3333 2.29419 12.1226 1.91912 11.7476C1.54405 11.3725 1.33333 10.8638 1.33333 10.3333V3.66668C1.33333 3.48987 1.2631 3.3203 1.13807 3.19527C1.01305 3.07025 0.843478 3.00001 0.666667 3.00001C0.489856 3.00001 0.320286 3.07025 0.195262 3.19527C0.0702379 3.3203 0 3.48987 0 3.66668V10.3333C0 11.2174 0.351189 12.0652 0.976311 12.6904C1.60143 13.3155 2.44928 13.6667 3.33333 13.6667H8.66667C8.84348 13.6667 9.01305 13.5964 9.13807 13.4714C9.2631 13.3464 9.33333 13.1768 9.33333 13C9.33333 12.8232 9.2631 12.6536 9.13807 12.5286C9.01305 12.4036 8.84348 12.3333 8.66667 12.3333ZM4.66667 7.66668C4.66667 7.84349 4.7369 8.01306 4.86193 8.13808C4.98695 8.26311 5.15652 8.33334 5.33333 8.33334H8.66667C8.84348 8.33334 9.01305 8.26311 9.13807 8.13808C9.2631 8.01306 9.33333 7.84349 9.33333 7.66668C9.33333 7.48987 9.2631 7.3203 9.13807 7.19527C9.01305 7.07025 8.84348 7.00001 8.66667 7.00001H5.33333C5.15652 7.00001 4.98695 7.07025 4.86193 7.19527C4.7369 7.3203 4.66667 7.48987 4.66667 7.66668ZM12 4.96001C11.9931 4.89877 11.9796 4.83843 11.96 4.78001V4.72001C11.9279 4.65146 11.8852 4.58845 11.8333 4.53334V4.53334L7.83333 0.533343C7.77822 0.481488 7.71521 0.438731 7.64667 0.406677C7.62677 0.40385 7.60657 0.40385 7.58667 0.406677C7.51894 0.367838 7.44415 0.342906 7.36667 0.333344H4.66667C4.13623 0.333344 3.62753 0.544057 3.25245 0.91913C2.87738 1.2942 2.66667 1.80291 2.66667 2.33334V9.00001C2.66667 9.53044 2.87738 10.0392 3.25245 10.4142C3.62753 10.7893 4.13623 11 4.66667 11H10C10.5304 11 11.0391 10.7893 11.4142 10.4142C11.7893 10.0392 12 9.53044 12 9.00001V5.00001C12 5.00001 12 5.00001 12 4.96001ZM8 2.60668L9.72667 4.33334H8.66667C8.48986 4.33334 8.32029 4.26311 8.19526 4.13808C8.07024 4.01306 8 3.84349 8 3.66668V2.60668ZM10.6667 9.00001C10.6667 9.17682 10.5964 9.34639 10.4714 9.47141C10.3464 9.59644 10.1768 9.66668 10 9.66668H4.66667C4.48986 9.66668 4.32029 9.59644 4.19526 9.47141C4.07024 9.34639 4 9.17682 4 9.00001V2.33334C4 2.15653 4.07024 1.98696 4.19526 1.86194C4.32029 1.73691 4.48986 1.66668 4.66667 1.66668H6.66667V3.66668C6.66847 3.89411 6.70905 4.11956 6.78667 4.33334H5.33333C5.15652 4.33334 4.98695 4.40358 4.86193 4.52861C4.7369 4.65363 4.66667 4.8232 4.66667 5.00001C4.66667 5.17682 4.7369 5.34639 4.86193 5.47141C4.98695 5.59644 5.15652 5.66668 5.33333 5.66668H10.6667V9.00001Z" fill="currentColor"></path>
+                                                </svg>
+                                            </span>
+                                            <span>Load more Employee</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-xl-4 col-md-12">
+                    <div class="card">
+                        <section class="py-10">
+                            <div class="container">
+                                <div class="bg-white rounded shadow overflow-hidden">
+                                    <div class="pt-3 pb-3 text-center">
+                                        <h4 class="text-left">Some Departments</h4>
+                                    </div>
+                                    <div class="px-5 table-responsive">
+                                        <table class="table mb-0 table-borderless table-striped small">
+                                            <thead>
+                                                <tr class="text-secondary"><th class="py-6 px-12">Code</th><th class="py-6 px-12">Name</th><th class="py-6 px-12">Date Of Creation</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in department)
+                                                {
+                                                    <tr>
+                                                        <td class="py-4 px-4">@item.Code</td>
+                                                        <td class="py-4 px-4">@item.Name</td>
+                                                        <td class="py-4 px-4">@item.DateOfCreation</td>
+                                                    </tr>
+                                                }
+                                                
+                                            </tbody>
+                                        </table>
+                                        <div class="pt-3 pb-3 text-center">
+                                            <a class="btn d-inline-flex align-items-center mx-auto text-decoration-none text-primary" style="max-width: max-content;" asp-controller="Department" asp-action="Index">
+                                                <span class="d-inline-block me-2">
+                                                    <svg viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 12px;height: 12px">
+                                                        <path d="M8.66667 12.3333H3.33333C2.8029 12.3333 2.29419 12.1226 1.91912 11.7476C1.54405 11.3725 1.33333 10.8638 1.33333 10.3333V3.66668C1.33333 3.48987 1.2631 3.3203 1.13807 3.19527C1.01305 3.07025 0.843478 3.00001 0.666667 3.00001C0.489856 3.00001 0.320286 3.07025 0.195262 3.19527C0.0702379 3.3203 0 3.48987 0 3.66668V10.3333C0 11.2174 0.351189 12.0652 0.976311 12.6904C1.60143 13.3155 2.44928 13.6667 3.33333 13.6667H8.66667C8.84348 13.6667 9.01305 13.5964 9.13807 13.4714C9.2631 13.3464 9.33333 13.1768 9.33333 13C9.33333 12.8232 9.2631 12.6536 9.13807 12.5286C9.01305 12.4036 8.84348 12.3333 8.66667 12.3333ZM4.66667 7.66668C4.66667 7.84349 4.7369 8.01306 4.86193 8.13808C4.98695 8.26311 5.15652 8.33334 5.33333 8.33334H8.66667C8.84348 8.33334 9.01305 8.26311 9.13807 8.13808C9.2631 8.01306 9.33333 7.84349 9.33333 7.66668C9.33333 7.48987 9.2631 7.3203 9.13807 7.19527C9.01305 7.07025 8.84348 7.00001 8.66667 7.00001H5.33333C5.15652 7.00001 4.98695 7.07025 4.86193 7.19527C4.7369 7.3203 4.66667 7.48987 4.66667 7.66668ZM12 4.96001C11.9931 4.89877 11.9796 4.83843 11.96 4.78001V4.72001C11.9279 4.65146 11.8852 4.58845 11.8333 4.53334V4.53334L7.83333 0.533343C7.77822 0.481488 7.71521 0.438731 7.64667 0.406677C7.62677 0.40385 7.60657 0.40385 7.58667 0.406677C7.51894 0.367838 7.44415 0.342906 7.36667 0.333344H4.66667C4.13623 0.333344 3.62753 0.544057 3.25245 0.91913C2.87738 1.2942 2.66667 1.80291 2.66667 2.33334V9.00001C2.66667 9.53044 2.87738 10.0392 3.25245 10.4142C3.62753 10.7893 4.13623 11 4.66667 11H10C10.5304 11 11.0391 10.7893 11.4142 10.4142C11.7893 10.0392 12 9.53044 12 9.00001V5.00001C12 5.00001 12 5.00001 12 4.96001ZM8 2.60668L9.72667 4.33334H8.66667C8.48986 4.33334 8.32029 4.26311 8.19526 4.13808C8.07024 4.01306 8 3.84349 8 3.66668V2.60668ZM10.6667 9.00001C10.6667 9.17682 10.5964 9.34639 10.4714 9.47141C10.3464 9.59644 10.1768 9.66668 10 9.66668H4.66667C4.48986 9.66668 4.32029 9.59644 4.19526 9.47141C4.07024 9.34639 4 9.17682 4 9.00001V2.33334C4 2.15653 4.07024 1.98696 4.19526 1.86194C4.32029 1.73691 4.48986 1.66668 4.66667 1.66668H6.66667V3.66668C6.66847 3.89411 6.70905 4.11956 6.78667 4.33334H5.33333C5.15652 4.33334 4.98695 4.40358 4.86193 4.52861C4.7369 4.65363 4.66667 4.8232 4.66667 5.00001C4.66667 5.17682 4.7369 5.34639 4.86193 5.47141C4.98695 5.59644 5.15652 5.66668 5.33333 5.66668H10.6667V9.00001Z" fill="currentColor"></path>
+                                                    </svg>
+                                                </span>
+                                                <span>Load more Department</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <!-- [ sample-page ] end -->
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - CRUD 
+        </div>
+    </footer> <!-- Required Js -->
+    <script src="~/dashboard/assets/js/plugins/popper.min.js"></script>
+    <script src="~/dashboard/assets/js/plugins/simplebar.min.js"></script>
+    <script src="~/dashboard/assets/js/plugins/bootstrap.min.js"></script>
+    <script src="~/dashboard/assets/js/fonts/custom-font.js"></script>
+    <script src="~/dashboard/assets/js/pcoded.js"></script>
+    <script src="~/dashboard/assets/js/plugins/feather.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+
+
+
+    <script>layout_change('light');</script>
+
+
+
+
+    <script>font_change("Roboto");</script>
+
+
+    <script>change_box_container('false');</script>
+
+
+    <script>layout_caption_change('true');</script>
+
+
+
+
+    <script>layout_rtl_change('false');</script>
+
+
+    <script>preset_change("preset-1");</script>
+
+
+    <!-- [Page Specific JS] start -->
+    <!-- Apex Chart -->
+    <script src="~/dashboard/assets/js/plugins/apexcharts.min.js"></script>
+    <script src="~/dashboard/assets/js/pages/dashboard-default.js"></script>
+    <!-- [Page Specific JS] end -->
+</body>
+<!-- [Body] end -->
+</html>

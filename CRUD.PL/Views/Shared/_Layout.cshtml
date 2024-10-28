@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CRUD</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Berry is trending dashboard template made using Bootstrap 5 design framework. Berry is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies.">
+    <meta name="keywords" content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard">
+    <meta name="author" content="codedthemes">
+
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="~/dashboard/assets/images/crud.svg" type="image/x-icon"> <!-- [Google Font] Family -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" id="main-font-link">
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/tabler-icons.min.css">
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/feather.css">
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/fontawesome.css">
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="~/dashboard/assets/fonts/material.css">
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="~/dashboard/assets/css/style.css" id="main-style-link">
+    <link rel="stylesheet" href="~/dashboard/assets/css/style-preset.css">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="~/js/site.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <!-- [ Pre-loader ] start -->
+        <div class="loader-bg">
+            <div class="loader-track">
+                <div class="loader-fill"></div>
+            </div>
+        </div>
+        <!-- [ Pre-loader ] End -->
+        <!-- [ Sidebar Menu ] start -->
+        <nav class="pc-sidebar">
+            <div class="navbar-wrapper">
+                <div class="m-header">
+                    <a href="" class="b-brand text-primary">
+                        <!-- ========   Change your logo from here   ============ -->
+                        <img src="~/dashboard/assets/images/crud.jpg" height="50" width="100">
+                    </a>
+                </div>
+                <div class="navbar-content">
+                    <ul class="pc-navbar">
+                        <li class="pc-item pc-caption">
+                            <label>Dashboard</label>
+                            <i class="ti ti-dashboard"></i>
+                        </li>
+                        <li class="pc-item">
+                            <a asp-controller="Home" asp-action="Index" class="pc-link">
+                                <span class="pc-micon">
+                                    <i class="ti ti-dashboard">
+                                    </i>
+                                </span><span class="pc-mtext">Default</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a asp-controller="Department" asp-action="Index" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-clipboard-list"></i></span>
+                                <span class="pc-mtext">Departments</span>
+                            </a>
+                        </li>
+                        <li class="pc-item">
+                            <a asp-controller="Employee" asp-action="Index" class="pc-link">
+                                <span class="pc-micon"><i class="ti ti-man"></i></span>
+                                <span class="pc-mtext">Employees</span>
+                            </a>
+                        </li>
+                        @if(User.IsInRole("Admin")) {
+                            <li class="pc-item">
+                                <a asp-controller="User" asp-action="Index" class="pc-link">
+                                    <span class="pc-micon"><i class="ti ti-user"></i></span>
+                                    <span class="pc-mtext">Users</span>
+                                </a>
+                            </li>
+                            <li class="pc-item">
+                                <a asp-controller="Role" asp-action="Index" class="pc-link">
+                                    <span class="pc-micon"><i class="ti ti-file-check"></i></span>
+                                    <span class="pc-mtext">Roles</span>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- [ Sidebar Menu ] end --> <!-- [ Header Topbar ] start -->
+        <header class="pc-header">
+            <div class="header-wrapper">
+                <!-- [Mobile Media Block] start -->
+                <div class="me-auto pc-mob-drp">
+                    <ul class="list-unstyled">
+                        <li class="pc-h-item header-mobile-collapse">
+                            <a href="#" class="pc-head-link head-link-secondary ms-0" id="sidebar-hide">
+                                <i class="ti ti-menu-2"></i>
+                            </a>
+                        </li>
+                        <li class="pc-h-item pc-sidebar-popup">
+                            <a href="#" class="pc-head-link head-link-secondary ms-0" id="mobile-collapse">
+                                <i class="ti ti-menu-2"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- [Mobile Media Block end] -->
+                <div class="ms-auto">
+                    <ul class="list-unstyled">
+                        <li class="dropdown pc-h-item header-user-profile">
+                            <a class="pc-head-link head-link-primary dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
+                               role="button" aria-haspopup="false" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-settings"></i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+                                <div class="dropdown-header">
+                                    <h4>Hi, <span class="small text-muted">@User.Identity.Name</span></h4>
+                                    <hr>
+                                    <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 280px)">
+                                        <a asp-action="SignOut" asp-controller="Account" class="dropdown-item">
+                                            <i class="ti ti-logout"></i>
+                                            <span>Logout</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+        <!-- [ Header ] end -->
+        
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - CRUD - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/dashboard/assets/js/plugins/popper.min.js"></script>
+    <script src="~/dashboard/assets/js/plugins/simplebar.min.js"></script>
+    <script src="~/dashboard/assets/js/plugins/bootstrap.min.js"></script>
+    <script src="~/dashboard/assets/js/fonts/custom-font.js"></script>
+    <script src="~/dashboard/assets/js/pcoded.js"></script>
+    <script src="~/dashboard/assets/js/plugins/feather.min.js"></script>
+    <script>layout_change('light');</script>
+    <script>font_change("Roboto");</script>
+    <script>change_box_container('false');</script>
+    <script>layout_caption_change('true');</script>
+    <script>layout_rtl_change('false');</script>
+    <script>preset_change("preset-1");</script>
+    @await RenderSectionAsync("ValidationScriptSection", required: false)
+    <script src="~/dashboard/assets/js/plugins/apexcharts.min.js"></script>
+    <script src="~/dashboard/assets/js/pages/dashboard-default.js"></script>
+</body>
+</html>

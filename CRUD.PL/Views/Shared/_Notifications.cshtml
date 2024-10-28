@@ -1,0 +1,15 @@
+﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+@if (TempData["Success"] != null)
+{
+    <script type="text/javascript">
+        toastr.success('@TempData["Success"]');
+@*         toastr.warning('@TempData["Success"]');
+ *@    </script>
+}
+else if (TempData["Pdf"] != null)
+{
+    <script type="text/javascript">
+        toastr.success('@TempData["Pdf"]');
+    </script>
+}

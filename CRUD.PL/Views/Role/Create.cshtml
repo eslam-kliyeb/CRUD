@@ -1,0 +1,17 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create New Role</h1>
+<br />
+<form asp-action="Create" asp-controller="Role" method="post">
+    @await Html.PartialAsync("~/Views/Role/PartialViews/CreateEditPartialView.cshtml", Model)
+    <input type="submit" value="Submit" class="btn btn-primary" />
+    <a asp-action="Index" asp-controller="Role" class="btn btn-light">Back To List</a>
+</form>
+@section ValidationScriptSection {
+    <partial name="_ValidationScriptsPartial" />
+}
+

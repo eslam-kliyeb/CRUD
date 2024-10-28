@@ -1,0 +1,90 @@
+﻿@model IEnumerable<EmployeeViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<br />
+<br />
+<br />
+<br />
+<partial name="_Notifications"></partial>
+<a asp-action="Create" asp-controller="Employee" class="btn" style="background-color: #e9d5ff !important; color: #7a20df !important;">Create New Employee</a>
+@* <a asp-action="DepartmentsPdf" asp-controller="Department" class="btn btn-primary">Departments As Pdf</a>
+ *@<br />
+@if (Model.Count() > 0)
+{
+    <br />
+    <div class="mt-2">
+        <form class="row offset-1" asp-action="Index" asp-controller="Employee" method="get">
+            <div class="input-group mb-3">
+                <input class="form-control" type="text" placeholder="Employee's Name" name="searchValue" value="@ViewBag.SearchValue" />
+                <div class="input-group-append">
+                    <button class="btn" style="background-color: #e9d5ff !important; color: #7a20df !important;" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+    <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-purple-200">
+            <tr >
+                <th >@Html.DisplayNameFor(E => E.Image)</th>
+                <th>@Html.DisplayNameFor(E => E.Age)</th>
+                <th>@Html.DisplayNameFor(E => E.Salary)</th>
+                <th>@Html.DisplayNameFor(E => E.Department)</th>
+                <th>@Html.DisplayNameFor(E => E.Address)</th>
+                <th>@Html.DisplayNameFor(E => E.PhoneNumber)</th>
+                <th>@Html.DisplayNameFor(E => E.HireDate)</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr class="bg-purple-100">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <img src="~/Files/Images/@employee.ImageName"
+                                 alt="Employee Image"
+                                 style="width: 60px; height: 60px"
+                                 class="rounded-circle" />
+                            <div class="ms-5">
+                                <p class="fw-bold mb-2">@employee.Name</p>
+                                <p class="text-muted mb-0">@Html.DisplayFor(E => employee.Email)</p>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>@employee.Age</td>
+                    <td>@Html.DisplayFor(E=>employee.Salary)</td>
+                    <td>@Html.DisplayFor(E => employee.Department.Name)</td>
+                    <td>@employee.Address</td>
+                    <td>@employee.PhoneNumber</td>
+                    <td>@employee.HireDate</td>
+                    <td>
+                        @if (employee.IsActve)
+                        {
+                            <span class="badge badge-success rounded-pill d-inline">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger rounded-pill d-inline">InActive</span>
+                        }
+                    </td>
+                    <partial name="_Buttons" model="@employee.Id" />
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="mt-5 alert alert-warning">
+        <h3>There is no Employees</h3>
+    </div>
+}
+

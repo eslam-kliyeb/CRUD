@@ -1,0 +1,13 @@
+﻿@model DepartmentViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Are You Sure To Delete @Model.Name Department</h1>
+<div asp-validation-summary="All"></div>
+<br />
+<form asp-action="Delete" asp-controller="Department" method="post">
+       @await Html.PartialAsync("~/Views/Department/PartialViews/DeleteDetailsPartialView.cshtml",Model)
+       <input type="submit" asp-route-id="@Model.Id" value="Delete" class="btn btn-danger"/>
+       <a asp-action="Index" asp-controller="Department" class="btn btn-light">Back To List</a>
+</form>

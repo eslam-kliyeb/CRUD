@@ -1,0 +1,14 @@
+﻿@model EmployeeViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Are You Sure To Delete @Model.Name Employee</h1>
+<div asp-validation-summary="All"></div>
+<br />
+<form asp-action="Delete" asp-controller="Employee" method="post">
+    @Html.Partial("~/Views/Employee/PartialViews/DeleteDetailsPartialView.cshtml")
+    <input type="submit" asp-route-id="@Model.Id" value="Delete" class="btn btn-danger" />
+    <a asp-action="Index" asp-controller="Employee" class="btn btn-light">Back To List</a>
+</form>
+

@@ -1,0 +1,15 @@
+﻿@model UserViewModel
+<div class="form-group">
+    <label class="col-form-label" asp-for="FName"></label>
+    <input class="form-control" asp-for="FName" />
+    <span asp-validation-for="FName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="LName"></label>
+    <input class="form-control" asp-for="LName" />
+    <span asp-validation-for="LName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Email"></label>
+    <input readonly class="form-control" asp-for="Email" />
+</div>

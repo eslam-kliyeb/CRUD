@@ -1,0 +1,12 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Role @Model.Name Details</h1>
+<br />
+@await Html.PartialAsync("~/Views/Role/PartialViews/DeleteDetailsPartialView.cshtml", Model)
+<a asp-action="Edit" asp-route-id="@Model.Id" asp-controller="Role" class="btn btn-primary">Edit</a>
+<a asp-action="Index" asp-controller="Role" class="btn btn-light">Back To List</a>
+

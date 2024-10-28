@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)system.text.encoding.codepages\8.0.0\buildTransitive\netcoreapp2.0\System.Text.Encoding.CodePages.targets" Condition="Exists('$(NuGetPackageRoot)system.text.encoding.codepages\8.0.0\buildTransitive\netcoreapp2.0\System.Text.Encoding.CodePages.targets')" />
+    <Import Project="$(NuGetPackageRoot)system.formats.asn1\8.0.1\buildTransitive\netcoreapp2.0\System.Formats.Asn1.targets" Condition="Exists('$(NuGetPackageRoot)system.formats.asn1\8.0.1\buildTransitive\netcoreapp2.0\System.Formats.Asn1.targets')" />
+    <Import Project="$(NuGetPackageRoot)system.security.cryptography.pkcs\8.0.0\buildTransitive\netcoreapp2.0\System.Security.Cryptography.Pkcs.targets" Condition="Exists('$(NuGetPackageRoot)system.security.cryptography.pkcs\8.0.0\buildTransitive\netcoreapp2.0\System.Security.Cryptography.Pkcs.targets')" />
+    <Import Project="$(NuGetPackageRoot)questpdf\2024.10.0\buildTransitive\QuestPDF.targets" Condition="Exists('$(NuGetPackageRoot)questpdf\2024.10.0\buildTransitive\QuestPDF.targets')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.aspnetcore.mvc.razor.runtimecompilation\5.0.17\buildTransitive\net5.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.targets" Condition="Exists('$(NuGetPackageRoot)microsoft.aspnetcore.mvc.razor.runtimecompilation\5.0.17\buildTransitive\net5.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.targets')" />
+  </ImportGroup>
+</Project>

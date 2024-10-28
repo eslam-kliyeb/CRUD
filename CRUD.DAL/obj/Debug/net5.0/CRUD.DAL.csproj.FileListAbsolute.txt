@@ -1,0 +1,12 @@
+D:\CRUD\CRUD Operations\CRUD.DAL\bin\Debug\net5.0\CRUD.DAL.deps.json
+D:\CRUD\CRUD Operations\CRUD.DAL\bin\Debug\net5.0\CRUD.DAL.dll
+D:\CRUD\CRUD Operations\CRUD.DAL\bin\Debug\net5.0\CRUD.DAL.pdb
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.csproj.AssemblyReference.cache
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.GeneratedMSBuildEditorConfig.editorconfig
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.AssemblyInfoInputs.cache
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.AssemblyInfo.cs
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.csproj.CoreCompileInputs.cache
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.dll
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\refint\CRUD.DAL.dll
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\CRUD.DAL.pdb
+D:\CRUD\CRUD Operations\CRUD.DAL\obj\Debug\net5.0\ref\CRUD.DAL.dll

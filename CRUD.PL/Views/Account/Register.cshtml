@@ -1,0 +1,78 @@
+﻿@model RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Auth.cshtml";
+}
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="auth-main">
+    <div class="auth-wrapper v3">
+        <div class="auth-form">
+            <div class="card mt-5">
+                <div class="card-body">
+                    <a  class="d-flex justify-content-center mt-3">
+                        <img src="~/dashboard/assets/images/crud.jpg" height="50" width="100">
+                    </a>
+                    <div class="row">
+                        <div class="d-flex justify-content-center">
+                            <div class="auth-header">
+                                <h2 class="text-secondary mt-5"><b>Sign up</b></h2>
+                                <p class="f-16 mt-2">Enter your credentials to continue</p>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="my-4 d-flex justify-content-center">Sign Up with Email address</h5>
+                    <form asp-action="Register" asp-controller="Account" method="post">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input asp-for="FName" class="form-control" placeholder="First Name">
+                                <label asp-for="FName">First Name</label>
+                                <span asp-validation-for="FName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input asp-for="LName" class="form-control" placeholder="Last Name">
+                                <label asp-for="LName">Last Name</label>
+                               <span asp-validation-for="LName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="Email Address">
+                        <label asp-for="Email">Email Address</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="Password" class="form-control" placeholder="Password">
+                         <label asp-for="Password">Password</label>
+                         <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm Password">
+                        <label asp-for="ConfirmPassword">Confirm Password</label>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mt-3s">
+                        <input asp-for="IsAgree" class="form-check-input input-primary" type="checkbox"checked="">
+                        <label asp-for="IsAgree" class="form-check-label">
+                            <span class="h5 mb-0">Agree with <span>Terms & Condition.</span></span>
+                        </label>
+                    </div>
+                    <div class="d-grid mt-4">
+                         <button type="Submit" class="btn btn-secondary p-2">Sign Up</button>
+                    </div>
+                    </form>
+                    <hr>
+                    <div class="d-grid mt-4">
+                    <a asp-action="Login" asp-controller="Account" class="btn btn-secondary p-2">Already have an account?</a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section ValidationScriptSection {
+    <partial name="_ValidationScriptsPartial" />
+}

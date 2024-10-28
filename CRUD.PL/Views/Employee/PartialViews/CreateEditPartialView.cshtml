@@ -1,0 +1,69 @@
+﻿@model EmployeeViewModel
+@{
+    var departments = new SelectList(@ViewBag.departments, "Id", "Name");
+}
+<div class="form-group">
+    <label class="col-form-label" asp-for="Name"></label>
+    <input class="form-control" asp-for="Name" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+@if (TempData["Edit"] is not null)
+{
+    <input asp-for="prevImageName" hidden value="@Model.ImageName" />
+}
+<div>
+    <div class="d-flex justify-content-center mb-4">
+        <img id="selectedAvatar" src="https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg"
+             class="rounded-circle" style="width: 200px; height: 200px; object-fit: cover;" alt="example placeholder" />
+    </div>
+    <div class="d-flex justify-content-center">
+        <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+            <label class="form-label text-white m-1" asp-for="Image">Choose Image</label>
+            <input type="file" asp-for="Image" class="form-control d-none" onchange="displaySelectedImage(event, 'selectedAvatar')" />
+        </div>
+    </div>
+</div>
+@* <div class="form-group">
+    <label class="col-form-label" asp-for="Image"></label>
+    <input class="form-control" asp-for="Image"/>
+</div> *@
+<div class="form-group">
+    <label class="col-form-label" asp-for="Age"></label>
+    <input class="form-control" asp-for="Age" />
+    <span asp-validation-for="Age" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Address"></label>
+    <input class="form-control" asp-for="Address" />
+    <span asp-validation-for="Address" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Salary"></label>
+    <input class="form-control" asp-for="Salary" />
+    <span asp-validation-for="Salary" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Department"></label>
+    <select class="form-control" asp-items="@departments" asp-for="DepartmentId">
+        <option value="@null">Select Department</option>
+    </select>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="Email"></label>
+    <input class="form-control" asp-for="Email" />
+    <span asp-validation-for="Email" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="PhoneNumber"></label>
+    <input class="form-control" asp-for="PhoneNumber" />
+    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="HireDate"></label>
+    <input class="form-control" asp-for="HireDate" />
+    <span asp-validation-for="HireDate" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label class="col-form-label" asp-for="IsActve"></label>
+    <input type="checkbox" asp-for="IsActve" />
+</div>
